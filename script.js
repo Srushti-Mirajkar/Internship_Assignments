@@ -1,53 +1,75 @@
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
-}
+function validateLogin() {
+    let email = document.getElementById("loginEmail");
+    let password = document.getElementById("loginPassword");
 
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
+    let valid = true;
 
-
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
-
-
-function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("You must write something!");
-  } else {
-    document.getElementById("myUL").appendChild(li);
-  }
-  document.getElementById("myInput").value = "";
-
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function() {
-      var div = this.parentElement;
-      div.style.display = "none";
+    if (email.value === "") {
+        email.classList.add("invalid");
+        document.getElementById("emailError").innerText = "Please enter a valid email address.";
+        valid = false;
+    } else {
+        email.classList.remove("invalid");
+        email.classList.add("valid");
+        document.getElementById("emailError").innerText = "";
     }
-  }
+
+    if (password.value.length < 6) {
+        password.classList.add("invalid");
+        document.getElementById("passwordError").innerText = "Password must be at least 6 characters long.";
+        valid = false;
+    } else {
+        password.classList.remove("invalid");
+        password.classList.add("valid");
+        document.getElementById("passwordError").innerText = "";
+    }
+
+    return valid;
+}
+
+function validateRegister() {
+    let valid = true;
+
+    let name = document.getElementById("name");
+    let email = document.getElementById("regEmail");
+    let password = document.getElementById("regPassword");
+    let phone = document.getElementById("phone");
+
+    if (name.value === "") {
+        name.classList.add("invalid");
+        document.getElementById("nameError").innerText = "Please enter your name.";
+        valid = false;
+    } else {
+        name.classList.add("valid");
+        document.getElementById("nameError").innerText = "";
+    }
+
+    if (!email.value.includes("@")) {
+        email.classList.add("invalid");
+        document.getElementById("regEmailError").innerText = "Please enter a valid email address.";
+        valid = false;
+    } else {
+        email.classList.add("valid");
+        document.getElementById("regEmailError").innerText = "";
+    }
+
+    if (password.value.length < 6) {
+        password.classList.add("invalid");
+        document.getElementById("regPasswordError").innerText = "Password must be at least 6 characters long.";
+        valid = false;
+    } else {
+        password.classList.add("valid");
+        document.getElementById("regPasswordError").innerText = "";
+    }
+
+    if (!/^[0-9]{10}$/.test(phone.value)) {
+        phone.classList.add("invalid");
+        document.getElementById("phoneError").innerText = "Please enter a valid phone number.";
+        valid = false;
+    } else {
+        phone.classList.add("valid");
+        document.getElementById("phoneError").innerText = "";
+    }
+
+    return valid;
 }
